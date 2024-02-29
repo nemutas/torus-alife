@@ -1,0 +1,15 @@
+@use 'sass:string';
+
+@mixin temp($name, $aspect) {
+  display: block;
+  aspect-ratio: string.unquote($aspect);
+  mask: url('/svgs/#{$name}.svg') 50% 50% / contain no-repeat;
+}
+
+@mixin play {
+  @include temp(play, '50 / 50');
+}
+
+@mixin pause {
+  @include temp(pause, '50 / 50');
+}

@@ -1,0 +1,62 @@
+@use '../mixins/media.scss' as *;
+@use '../mixins/svg.scss';
+
+.sound-controls {
+  $theme: #ffffff;
+  // $theme: #000000;
+
+  position: absolute;
+  bottom: 0;
+  padding-right: 1rem;
+  color: $theme;
+
+  backdrop-filter: blur(5px);
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .sound-play {
+    position: relative;
+    padding: 1rem;
+    width: 5rem;
+    aspect-ratio: 1;
+    border: 1px solid $theme;
+    transition: background 0.3s;
+
+    &::before {
+      content: '';
+      @include svg.play;
+      width: 100%;
+      aspect-ratio: 1;
+      background: $theme;
+      transition: mask 0.3s;
+    }
+
+    &.playing::before {
+      @include svg.pause;
+    }
+
+    @include hoverable {
+      &:hover {
+        background: #{$theme}26;
+      }
+    }
+  }
+
+  .sound-info {
+    font-size: 1.3rem;
+    p {
+      display: grid;
+      grid-template-columns: 3.5rem auto 2.5rem;
+      + p {
+        margin-top: 0.3rem;
+      }
+      .bpm-value,
+      .volume-value {
+        margin-left: auto;
+        font-variant-numeric: tabular-nums;
+      }
+    }
+  }
+}
