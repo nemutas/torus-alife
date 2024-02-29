@@ -64,18 +64,17 @@ export class Canvas extends Three {
     return mesh
   }
 
-  private getIntersectUv() {
+  private getIntersectUv(): [number, number] | null {
     this.pointer.set(...mouse2d.position)
     this.raycaster.setFromCamera(this.pointer, this.camera)
 
     const intersects = this.raycaster.intersectObject(this.torus)
 
-    let intersectUv: [number, number] = [0, 0]
     if (0 < intersects.length) {
       const io = intersects[0]
-      if (io.uv) intersectUv = [io.uv.x, io.uv.y]
+      if (io.uv) return [io.uv.x, io.uv.y]
     }
-    return intersectUv
+    return null
   }
 
   private anime() {

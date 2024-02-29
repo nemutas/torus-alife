@@ -33,12 +33,12 @@ export class Simulator extends BackBuffer {
     return min2 + ((value - min1) * (max2 - min2)) / (max1 - min1)
   }
 
-  render(intersectUv: [number, number], dt: number) {
+  render(intersectUv: [number, number] | null, dt: number) {
     const speed = this.map(this.avgFps(dt), 60, 144, 4, 9.6) // 75fps: 5, 60 / 75 * 5 = 4, 144 / 75 * 5 = 9.6
 
     this.uniforms.uFrame.value += 1
     this.uniforms.tBackBuffer.value = this.backBuffer
-    this.uniforms.uIntersectUv.value = intersectUv
+    intersectUv && (this.uniforms.uIntersectUv.value = intersectUv)
     this.uniforms.uSpeed.value = Math.round(speed)
 
     super.render()
