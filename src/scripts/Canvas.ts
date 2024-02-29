@@ -28,6 +28,7 @@ export class Canvas extends Three {
 
     this.controls.enableDamping = true
     this.controls.dampingFactor = 0.15
+    this.controls.enablePan = false
   }
 
   private createLights() {

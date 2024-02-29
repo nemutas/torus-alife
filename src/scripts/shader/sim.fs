@@ -8,7 +8,7 @@ uniform sampler2D tBackBuffer;
 uniform vec2 uCell;
 uniform int uFrame;
 uniform vec2 uIntersectUv;
-uniform int uSpeed;
+uniform int uUpdateStep;
 
 vec3 hash(vec3 v) {
   uvec3 x = floatBitsToUint(v + vec3(0.1, 0.2, 0.3));
@@ -25,7 +25,7 @@ void main() {
   float c;
   if (uFrame == 1) {
     c = step(0.5, hash(vec3(iuv, 0.1)).x);
-  } else if(uFrame % uSpeed == 0)  {
+  } else if(uFrame % uUpdateStep == 0)  {
     float nc;
     for (float ix = -1.0; ix <= 1.0; ix++) {
       for (float iy = -1.0; iy <= 1.0; iy++) {
@@ -47,7 +47,7 @@ void main() {
     c = texture(tBackBuffer, vUv).a;
   }
 
-  if (uFrame % uSpeed == 0) {
+  if (uFrame % uUpdateStep == 0) {
     vec2 iiuv = floor(uIntersectUv * uCell) + 0.5;
     float d = step(distance(iiuv, iuv * uCell), 2.0);
     c += d * step(hash(vec3(iuv, float(uFrame))).x, 0.5);

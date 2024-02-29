@@ -13,7 +13,7 @@ export class Simulator extends BackBuffer {
         tBackBuffer: { value: null },
         uFrame: { value: 0 },
         uIntersectUv: { value: [0, 0] },
-        uSpeed: { value: 5 },
+        uUpdateStep: { value: 5 },
       },
       vertexShader,
       fragmentShader,
@@ -34,12 +34,12 @@ export class Simulator extends BackBuffer {
   }
 
   render(intersectUv: [number, number] | null, dt: number) {
-    const speed = this.map(this.avgFps(dt), 60, 144, 4, 9.6) // 75fps: 5, 60 / 75 * 5 = 4, 144 / 75 * 5 = 9.6
+    const updateStep = this.map(this.avgFps(dt), 60, 144, 4, 9.6) // 75fps: 5, 60 / 75 * 5 = 4, 144 / 75 * 5 = 9.6
 
     this.uniforms.uFrame.value += 1
     this.uniforms.tBackBuffer.value = this.backBuffer
     intersectUv && (this.uniforms.uIntersectUv.value = intersectUv)
-    this.uniforms.uSpeed.value = Math.round(speed)
+    this.uniforms.uUpdateStep.value = Math.round(updateStep)
 
     super.render()
   }
