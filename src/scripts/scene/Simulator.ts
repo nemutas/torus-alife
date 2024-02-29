@@ -24,9 +24,8 @@ export class Simulator extends BackBuffer {
   }
 
   private avgFps(dt: number) {
-    const fps = Math.max(60, Math.min(1 / dt, 144))
-    if (this.fpsLog.length < 50) this.fpsLog.push(fps)
-    else this.fpsLog.shift()
+    this.fpsLog.push(Math.max(60, Math.min(1 / dt, 144)))
+    if (50 < this.fpsLog.length) this.fpsLog.shift()
     return this.fpsLog.reduce((p, c) => p + c) / this.fpsLog.length
   }
 
